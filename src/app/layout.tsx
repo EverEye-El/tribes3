@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
+import ThirdwebProviderV5 from "@/app/providers/ThirdwebProviderV5";
+import ThirdwebProviderV4 from "@/app/providers/ThirdwebProviderV4"
+
+import { client } from "@/app/client";
+
 import localFont from "next/font/local";
-import "./globals.css";
+import "@/app/styles/globals.css";
+import Home from "./page";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -20,15 +26,20 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
-}: Readonly<{
+  children
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
-      </body>
+      <ThirdwebProviderV4>
+        <ThirdwebProviderV5>
+          <body className={`${geistSans.variable} ${geistMono.variable}`}>
+            {children}
+          </body>
+        </ThirdwebProviderV5>
+      </ThirdwebProviderV4>
     </html>
+    
   );
 }
